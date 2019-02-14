@@ -1,29 +1,84 @@
-# Tested on Deeptest release 1.10.0
+# Tested on Deeptest release 1.12.0
 cbmcArguments:
-  cover-function-only: false
-  depth: false
-  do-not-test-methods-with-access: [ private ]
   java-generate-no-comments: true
-  no-trivial-tests: true
 phases:
 -
-  timeout: 300
+  timeout: 60
   cbmcArguments:
-    java-assume-inputs-non-null: true
     max-nondet-array-length: 10
+    unwind: 1
     string-non-empty: true
+    java-assume-inputs-non-null: true
+-
+  timeout: 60
+  cbmcArguments:
+    classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+    max-nondet-array-length: 10
     unwind: 1
 -
-  timeout: 300
+  timeout: 60
   cbmcArguments:
+    classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+    max-nondet-array-length: 20
+    unwind: 2
+    string-non-empty: true
+    java-assume-inputs-non-null: true
+-
+  timeout: 60
+  cbmcArguments:
+    classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
     max-nondet-array-length: 20
     unwind: 2
 -
-  timeout: 300
+  timeout: 60
   cbmcArguments:
+    classpath: '/tools/cbmc/models.jar:.'
     max-nondet-array-length: 30
     max-nondet-string-length: 10
     unwind: 3
+    string-non-empty: true
+    java-assume-inputs-non-null: true
+-
+  timeout: 60
+  cbmcArguments:
+    classpath: '/tools/cbmc/models.jar:.'
+    max-nondet-array-length: 30
+    max-nondet-string-length: 10
+    unwind: 3
+-
+  timeout: 120
+  cbmcArguments:
+    classpath: '/tools/cbmc/models.jar:.'
+    max-nondet-array-length: 30
+    max-nondet-string-length: 10
+    unwind: 4
+    load-containing-class-only: true
+    string-non-empty: true
+    java-assume-inputs-non-null: true
+-
+  timeout: 120
+  cbmcArguments:
+    classpath: '/tools/cbmc/models.jar:.'
+    max-nondet-array-length: 50
+    max-nondet-string-length: 50
+    unwind: 4
+    load-containing-class-only: true
+-
+  timeout: 120
+  cbmcArguments:
+    classpath: '/tools/cbmc/models.jar:.'
+    max-nondet-array-length: 130
+    max-nondet-string-length: 110
+    unwind: 10
+    string-non-empty: true
+    java-assume-inputs-non-null: true
+-
+  timeout: 120
+  cbmcArguments:
+    classpath: '/tools/cbmc/models.jar:.'
+    max-nondet-array-length: 300
+    max-nondet-string-length: 100
+    unwind: 10
 units:
   - target:
     - dir: pac4j-config/target/classes
@@ -545,3 +600,353 @@ units:
       file: org/pac4j/saml/logout/impl/SAML2LogoutResponseMessageSender.class
       sourceDir: pac4j-saml/src/main/java
       sourceFile: org/pac4j/saml/logout/impl/SAML2LogoutResponseMessageSender.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/converter/ColorConverter.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/converter/ColorConverter.java
+    # Child of ColorConverter.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/Color.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/Color.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/client/finder/DefaultSecurityClientFinder.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/client/finder/DefaultSecurityClientFinder.java
+  - target:
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/wechat/WechatProfileCreator.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/wechat/WechatProfileCreator.java
+    # Child of WechatProfileCreator.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/config/OAuth20Configuration.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/config/OAuth20Configuration.java
+    # Child of WechatProfileCreator.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/creator/OAuth20ProfileCreator.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/creator/OAuth20ProfileCreator.java
+    # Child of WechatProfileCreator.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/scribe/model/WechatToken.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/scribe/model/WechatToken.java
+  - target:
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/converter/JsonConverter.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/converter/JsonConverter.java
+    # Child of JsonConverter.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/JsonHelper.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/JsonHelper.java
+  - target:
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/casoauthwrapper/CasOAuthWrapperProfileDefinition.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/casoauthwrapper/CasOAuthWrapperProfileDefinition.java
+    # Child of CasOAuthWrapperProfileDefinition.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/converter/Converters.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/converter/Converters.java
+    # Child of CasOAuthWrapperProfileDefinition.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/definition/OAuth20ProfileDefinition.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/definition/OAuth20ProfileDefinition.java
+    # Child of CasOAuthWrapperProfileDefinition.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/scribe/builder/api/CasOAuthWrapperApi20.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/scribe/builder/api/CasOAuthWrapperApi20.java
+  - target:
+    - dir: pac4j-config/target/classes
+      file: org/pac4j/config/builder/DbAuthenticatorBuilder.class
+      sourceDir: pac4j-config/src/main/java
+      sourceFile: org/pac4j/config/builder/DbAuthenticatorBuilder.java
+    # Child of DbAuthenticatorBuilder.class
+    - dir: pac4j-sql/target/classes
+      file: org/pac4j/sql/profile/service/DbProfileService.class
+      sourceDir: pac4j-sql/src/main/java
+      sourceFile: org/pac4j/sql/profile/service/DbProfileService.java
+  - target:
+    - dir: pac4j-oidc/target/classes
+      file: org/pac4j/oidc/profile/creator/OidcProfileCreator.class
+      sourceDir: pac4j-oidc/src/main/java
+      sourceFile: org/pac4j/oidc/profile/creator/OidcProfileCreator.java
+    # Child of OidcProfileCreator.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/creator/ProfileCreator.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/creator/ProfileCreator.java
+    # Child of OidcProfileCreator.class
+    - dir: pac4j-oidc/target/classes
+      file: org/pac4j/oidc/credentials/OidcCredentials.class
+      sourceDir: pac4j-oidc/src/main/java
+      sourceFile: org/pac4j/oidc/credentials/OidcCredentials.java
+    # Child of OidcProfileCreator.class
+    - dir: pac4j-oidc/target/classes
+      file: org/pac4j/oidc/profile/OidcProfile.class
+      sourceDir: pac4j-oidc/src/main/java
+      sourceFile: org/pac4j/oidc/profile/OidcProfile.java
+    # Child of OidcProfileCreator.class
+    - dir: pac4j-oidc/target/classes
+      file: org/pac4j/oidc/profile/OidcProfileDefinition.class
+      sourceDir: pac4j-oidc/src/main/java
+      sourceFile: org/pac4j/oidc/profile/OidcProfileDefinition.java
+  - target:
+    - dir: pac4j-config/target/classes
+      file: org/pac4j/config/builder/IndirectHttpClientBuilder.class
+      sourceDir: pac4j-config/src/main/java
+      sourceFile: org/pac4j/config/builder/IndirectHttpClientBuilder.java
+    # Child of IndirectHttpClientBuilder.class
+    - dir: pac4j-http/target/classes
+      file: org/pac4j/http/client/indirect/FormClient.class
+      sourceDir: pac4j-http/src/main/java
+      sourceFile: org/pac4j/http/client/indirect/FormClient.java
+    # Child of IndirectHttpClientBuilder.class
+    - dir: pac4j-http/target/classes
+      file: org/pac4j/http/client/indirect/IndirectBasicAuthClient.class
+      sourceDir: pac4j-http/src/main/java
+      sourceFile: org/pac4j/http/client/indirect/IndirectBasicAuthClient.java
+  - target:
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/crypto/DefaultSignatureSigningParametersProvider.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/crypto/DefaultSignatureSigningParametersProvider.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/InternalAttributeHandler.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/InternalAttributeHandler.java
+    # Child of InternalAttributeHandler.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/util/JavaSerializationHelper.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/util/JavaSerializationHelper.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/engine/DefaultCallbackLogic.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/engine/DefaultCallbackLogic.java
+    # Child of DefaultCallbackLogic.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/client/BaseClient.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/client/BaseClient.java
+    # Child of DefaultCallbackLogic.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/client/finder/DefaultCallbackClientFinder.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/client/finder/DefaultCallbackClientFinder.java
+    # Child of DefaultCallbackLogic.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/context/ContextHelper.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/context/ContextHelper.java
+    # Child of DefaultCallbackLogic.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/exception/http/SeeOtherAction.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/exception/http/SeeOtherAction.java
+  - target:
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/client/GenericOAuth20Client.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/client/GenericOAuth20Client.java
+    # Child of GenericOAuth20Client.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/converter/AbstractAttributeConverter.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/converter/AbstractAttributeConverter.java
+    # Child of GenericOAuth20Client.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/OAuth20Profile.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/OAuth20Profile.java
+    # Child of GenericOAuth20Client.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/generic/GenericOAuth20ProfileDefinition.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/generic/GenericOAuth20ProfileDefinition.java
+    # Child of GenericOAuth20Client.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/scribe/builder/api/GenericApi20.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/scribe/builder/api/GenericApi20.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/authorization/generator/FromAttributesAuthorizationGenerator.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/authorization/generator/FromAttributesAuthorizationGenerator.java
+  - target:
+    - dir: pac4j-oidc/target/classes
+      file: org/pac4j/oidc/credentials/authenticator/OidcAuthenticator.class
+      sourceDir: pac4j-oidc/src/main/java
+      sourceFile: org/pac4j/oidc/credentials/authenticator/OidcAuthenticator.java
+  - target:
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/credentials/authenticator/SAML2Authenticator.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/credentials/authenticator/SAML2Authenticator.java
+    # Child of SAML2Authenticator.class
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/profile/SAML2Profile.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/profile/SAML2Profile.java
+  - target:
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/profile/impl/AbstractSAML2ResponseValidator.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/profile/impl/AbstractSAML2ResponseValidator.java
+    # Child of AbstractSAML2ResponseValidator.class
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/profile/api/SAML2ResponseValidator.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/profile/api/SAML2ResponseValidator.java
+  - target:
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/credentials/extractor/OAuth20CredentialsExtractor.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/credentials/extractor/OAuth20CredentialsExtractor.java
+    # Child of OAuth20CredentialsExtractor.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/credentials/OAuth20Credentials.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/credentials/OAuth20Credentials.java
+    # Child of OAuth20CredentialsExtractor.class
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/exception/OAuthCredentialsException.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/exception/OAuthCredentialsException.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/http/url/DefaultUrlResolver.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/http/url/DefaultUrlResolver.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/converter/AbstractAttributeConverter.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/converter/AbstractAttributeConverter.java
+  - target:
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/logout/impl/SAML2LogoutRequestBuilder.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/logout/impl/SAML2LogoutRequestBuilder.java
+    # Child of SAML2LogoutRequestBuilder.class
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/util/Configuration.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/util/Configuration.java
+  - target:
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/qq/QQProfileCreator.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/qq/QQProfileCreator.java
+    # Child of QQProfileCreator.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/exception/HttpCommunicationException.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/exception/HttpCommunicationException.java
+  - target:
+    - dir: pac4j-oauth/target/classes
+      file: org/pac4j/oauth/profile/JsonHelper.class
+      sourceDir: pac4j-oauth/src/main/java
+      sourceFile: org/pac4j/oauth/profile/JsonHelper.java
+  - target:
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/logout/impl/SAML2LogoutValidator.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/logout/impl/SAML2LogoutValidator.java
+    # Child of SAML2LogoutValidator.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/exception/http/OkAction.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/exception/http/OkAction.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/client/finder/DefaultCallbackClientFinder.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/client/finder/DefaultCallbackClientFinder.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/logout/handler/DefaultLogoutHandler.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/logout/handler/DefaultLogoutHandler.java
+    # Child of DefaultLogoutHandler.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/factory/ProfileManagerFactory2Aware.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/factory/ProfileManagerFactory2Aware.java
+    # Child of DefaultLogoutHandler.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/store/GuavaStore.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/store/GuavaStore.java
+    # Child of DefaultLogoutHandler.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/store/Store.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/store/Store.java
+  - target:
+    - dir: pac4j-cas/target/classes
+      file: org/pac4j/cas/credentials/authenticator/CasAuthenticator.class
+      sourceDir: pac4j-cas/src/main/java
+      sourceFile: org/pac4j/cas/credentials/authenticator/CasAuthenticator.java
+    # Child of CasAuthenticator.class
+    - dir: pac4j-cas/target/classes
+      file: org/pac4j/cas/config/CasConfiguration.class
+      sourceDir: pac4j-cas/src/main/java
+      sourceFile: org/pac4j/cas/config/CasConfiguration.java
+    # Child of CasAuthenticator.class
+    - dir: pac4j-cas/target/classes
+      file: org/pac4j/cas/profile/CasProfileDefinition.class
+      sourceDir: pac4j-cas/src/main/java
+      sourceFile: org/pac4j/cas/profile/CasProfileDefinition.java
+    # Child of CasAuthenticator.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/http/callback/CallbackUrlResolver.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/http/callback/CallbackUrlResolver.java
+    # Child of CasAuthenticator.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/http/url/UrlResolver.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/http/url/UrlResolver.java
+    # Child of CasAuthenticator.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/profile/InternalAttributeHandler.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/profile/InternalAttributeHandler.java
+  - target:
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/crypto/KeyStoreCredentialProvider.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/crypto/KeyStoreCredentialProvider.java
+  - target:
+    - dir: pac4j-oidc/target/classes
+      file: org/pac4j/oidc/logout/OidcLogoutActionBuilder.class
+      sourceDir: pac4j-oidc/src/main/java
+      sourceFile: org/pac4j/oidc/logout/OidcLogoutActionBuilder.java
+    # Child of OidcLogoutActionBuilder.class
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/logout/LogoutActionBuilder.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/logout/LogoutActionBuilder.java
+  - target:
+    - dir: pac4j-core/target/classes
+      file: org/pac4j/core/authorization/authorizer/CacheControlHeader.class
+      sourceDir: pac4j-core/src/main/java
+      sourceFile: org/pac4j/core/authorization/authorizer/CacheControlHeader.java
+  - target:
+    - dir: pac4j-saml/target/classes
+      file: org/pac4j/saml/transport/Pac4jHTTPPostDecoder.class
+      sourceDir: pac4j-saml/src/main/java
+      sourceFile: org/pac4j/saml/transport/Pac4jHTTPPostDecoder.java
